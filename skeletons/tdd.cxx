@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2016-2021 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2016-2022 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** tdd.cxx : example of catch2 main
  ****
@@ -19,6 +19,6 @@ double f(int n) { return n*n+1; }
 #include "catch2/catch_all.hpp"
 
 TEST_CASE( "test that f always returns positive" ) {
-  for (int n=0; n<1000; n++)
-    REQUIRE( f(n)>0 );  
+  int n=5;
+  REQUIRE( f(n)>0 );  
 }
