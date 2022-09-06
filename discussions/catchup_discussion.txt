@@ -1,0 +1,121 @@
+================ Good stuff ================
+
+----
+
+void swap(int &a, int &b) {
+  int temp = a; // Save this for the swap
+  a = b; // Now a and b are b, and temp is still a
+  b = temp; // Now b is temp, which is old a
+}
+
+----
+
+int sum1 = 0;
+	for(int elem : inputNums){
+		if(elem % 2 == 0){
+			sum1 += elem;
+		}
+	}
+
+----
+
+int outputmax(const vector<int> &vec){
+    int high = INT_MIN;
+    for(int value : vec){
+      //will find the local maximum in the testing array and return the highest value
+
+      if(value > high){
+	high = value;
+      }
+    }
+    return high;
+}
+
+
+================ Coding section ================
+
+---- Would have liked to see range-based loop
+
+	// loops through every element in the vector and sums if even
+	for (int k = 0; k < vecLen; k++){
+		if (arr[k] % 2 == 0){
+			evenNumSum += arr[k];
+		}
+	}
+
+---- Don't use C-style arrays:
+
+void find_max(const int (&array)[N]) {
+
+---- Absolutely no global variables!
+
+int input1,input2;
+void swap(int i, int j)
+{
+	int s1, s2;
+	s1 = i;
+	s2 = j;
+	input1 = s2;
+	input2 = s1;
+}
+
+================ Style section ================
+
+---- Lack of indentation:
+
+int main()
+{
+	int w=0, v=1, u=1;
+for(v; v<100; v++)
+{
+for(u; u<100; u++)
+{
+	w = (v*v)+(u*u);
+
+---- More indentation:
+
+    for (int start = 1; start<1000; start++){
+        int iterate = start, count =0;
+    while (iterate!=0){
+        if (iterate%2==0)
+
+
+---- Uninitialized variable:
+
+        int countPrev;
+        // iterate 1 to 1000 for starting numbers
+        for (int n = 1; n<=1000; n++){
+
+---- See the textbook for discussion:
+
+using namespace std;
+
+---- Please use meaningful names such as `starting_value':
+
+  for( int u=1; u<=1000; u++ ){
+    int un = u;
+
+---- Keep your variables local:
+
+	int current; 
+	for(int startnum=1; startnum<=1000; startnum++) 
+	{
+		int numsteps = 0; 
+		current = startnum; 
+
+
+================ Random comments ================
+
+---- Clever. Too clever?
+
+// Function swaps the place of each variable by adding and subtracting from itself
+void swap (int &i,int &j){
+	i = i + j;
+	j = i - j;
+	i = i - j;
+}
+
+---- hm.
+
+void swap(auto &i, auto &j){
+	if( typeid(i) == typeid(j) ){
