@@ -1,0 +1,107 @@
+Good:
+
+void find_initial_bounds(polynomial coeff, double& left, double& right){
+  if (is_odd(coeff) == false){
+    throw("error");
+  }
+
+  double fleft = evaluate_at(coeff, left);
+  double fright = evaluate_at(coeff, right);
+
+  double result = fleft*fright;
+
+  while (result > 0){
+    left--;
+    right++;
+
+
+================================================================
+
+void move_bounds_closer (polynomial coefficients , double &left, double &right) {
+  double midpoint = (left + right)/2;
+  double evalmidpoint = evaluate_at(coefficients, midpoint);
+  double evalleft = evaluate_at(coefficients, left);
+  double evalright = evaluate_at(coefficients, right);
+
+  if (evalmidpoint * evalleft > 0){
+    left = midpoint;
+  }
+  else {
+      right = midpoint;
+  }
+}
+
+================================================================
+
+auto find_zero( polynomial coefficients, double prec ){
+
+  ... stuff ...
+  find_initial_bounds( coefficients, left, right );
+
+  while (err > prec) {
+    move_bounds_closer(coefficients, left, right);
+    double evalleft = evaluate_at(coefficients,left);
+    double evalright = evaluate_at(coefficients,right);
+    err = abs(evalleft - evalright);
+  }
+  double zero = left;
+
+  return zero;
+}
+
+
+================================================================
+================================================================
+
+Almost:
+
+double find_zero(polynomial coefficients, double prec) {
+  ... basically the whole program ...
+}
+
+================================================================
+
+
+  double left = INT_MIN;
+  double right = INT_MAX;
+  find_initial_bounds(coeff, left, right);
+
+================================================================
+
+double find_zero( vector<double> coeff,double prec) {
+  ... stuff ...
+  find_initial_bounds(coeff,left,right);
+
+  while(abs(left-right)>prec){
+    move_bounds_closer(coeff,left,right);
+  }
+
+  return (left+right)/2;
+}
+
+================================================================
+
+void find_initial_bounds (polynomial coefficients, double &left, double &right){
+    ... stuff ...
+    while (resultL > 0){
+        left -= 1;
+        resultL = evaluate_at(coefficients, left);
+    }
+    while (resultR < 0){
+        right += 1;
+        resultR = evaluate_at(coefficients, right);
+    }
+}
+
+================================================================
+
+
+void find_initial_bounds ( vector<double> coeff,double &left,double &right) {
+  ... stuff ...
+  while (cond) {
+    if(evaluate_at(coeff,left)*evaluate_at(coeff,right) > 0){
+      right = right + .1;
+      left = left + .1;
+    }
+    else { cond = false; }
+  }
