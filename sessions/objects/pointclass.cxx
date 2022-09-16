@@ -41,9 +41,29 @@ public:
   };
 };
 
+class LinearFunction {
+private:
+  // data members
+  Point one,two;
+  // float slope,intercept;
+  // Point reference; float slope;
+public:
+  // available function methods
+  // not the most elegant: LinearFunction( Point p,Point q ) { one=p; two=q; };
+  // better:
+  LinearFunction( Point p,Point q ) 
+    : one(p),two(q) {};
+  float evaluate_at( float x ) {
+    // option1 : lots of thinking
+    // option2 : return x*slope+intercept
+    // option3 : return reference.y + (x-reference.x)*slope
+  };
+};
+
 int main() {
   Point p(1.0,1.0), q(2.0,0.5);
-  Point z;
+
+  LinearFunction slope(p,q);
 
   cout << "dist: " << p.distance(q) << '\n';
 
