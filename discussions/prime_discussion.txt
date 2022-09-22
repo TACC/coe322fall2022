@@ -1,0 +1,143 @@
+==== isprime
+
+bool isprime(int number)
+{
+    // 1 and anything smaller than 1 are 
+    // not prime numbers, thus it cannot be an acceptable input.
+    if(number <= 1)
+    {
+        return false;
+    }
+
+    for( int i = 2; i*i <= number; i++)
+    {
+        // if number is modular by i, yielding 0 thus not a prime
+        if( number % i == 0)
+        {   
+            return false;
+        }
+    }
+    return true;
+}
+
+bool is_prime(int num){
+  // returns true/false if number is/not prime
+  // loop from 2 to half of the input and checks
+  // if num is divisible by i. 
+  for (int i=2; i<= num/2; i++){
+    if ((num % i) == 0){
+    return false;
+    }
+  }
+  return true;
+}
+
+-------- Don't get too cute:
+
+bool isprime(int i){
+  if (i == 2|| i ==3) {
+    return true;
+  }
+  if (i <= 1 || i % 2 == 0 || i % 3 == 0) {
+    return false;
+  }
+  for (int j = 5; j * j <= i; j += 6) {
+    if (i % j == 0 || i % (j + 2) == 0) {
+      return false;
+    }
+  }
+  return true;
+}
+
+-------- too complicated
+
+bool isprime(int n){
+
+  if (n%2==0)
+    return false;
+
+  for(int i = 3;i<n/2;i=i+2){
+    for (int j = 3;j<n/2;j=j+2){
+      if(i*j==n){
+
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+
+-------- Where is my finger-wagging emoji?
+
+    int primes[112] = { 2,      5,      7,      11,     13,     17,     19,     23,     29,     31,     37,     41,     43,     47,     53,     59,     61,     67,     71,
+    73,         79,     83,     89,     97,     101,    103,    107,    109,    113,    127,    131,    137,    139,    149,    151,    157,    163,    167,    173,
+    179,        181,    191,    193,    197,    199,    211,    223,    227,    229,    233,    239,    241,    251,    257,    263,    269,    271,    277,    281,
+    283,        293,    307,    311,    313,    317,    331,    337,    347,    349,    353,    359,    367,    373,    379,    383,    389,    397,    401,    409,
+    419,        421,    431,    433,    439,    443,    449,    457,    461,    463,    467,    479,    487,    491,    499,    503,    509,    521,    523,    541,
+    547,        557,    563,    569,    571,    577,    587,    593,    599,    601,    607,    613 };
+
+================ generator
+
+-------- Correct design: no constructor needed,
+default values take care of everything.
+
+class primegenerator {
+private:
+	int prime = 2;
+	int primesfound = 0;
+public:
+	int how_many_primes_found() {
+		return primesfound;
+	}
+
+-------- also good: set initial values in constructor
+
+		primegenerator(){
+			currentPrime = 1;
+			numOfPrimes = 0;
+		}	
+
+
+-------- Finding next prime: some variant of
+
+int nextprime(){
+  prime_num_last+=1;
+  while(  isprime(prime_num_last)==false ){prime_num_last++;}
+  primecount++;
+  return prime_num_last;
+};
+
+
+-------- Think about space/time complexity:
+vector is not needed, this only wastes space
+
+class primegenerator
+{
+    private:
+        int nprime;
+        vector<int> primeHolder{1};
+
+-------- Correct variable naming please:
+
+int number_of_primes_found(){
+    while (count !=-1){
+      if (isprime(numCount) == true){
+	nextPrime = numCount;
+	numCount++;
+	return count++;
+      }
+      numCount++;
+    }
+  }
+  int nextprime(){
+    return nextPrime;
+  };
+
+1.
+count : what does this count
+numCount: what does this count?
+2. a function "number of primes found" should only return something,
+not do all sorts of computation.
+
