@@ -25,6 +25,13 @@ public:
   float distance_to_origin() {
     return sqrt( x*x + y*y );
   }
+  Point scale( float s ) { return Point(s*x,s*y); };
+  Point operator*(float s) { return Point(s*x,s*y); };
+  Point operator+(Point other) {
+    return Point(x+other.x,y+other.y);
+  };
+  void print() { cout << x << "," << y << '\n'; };
+
   auto dx(Point other) { return x-other.x; };
   auto dy(Point other) { return y-other.y; };
   // accessors
@@ -89,6 +96,12 @@ public:
 
 int main() {
   Point p(1.0,1.0), q(2.0,3.);
+
+  Point pscaled = p*2.5; // scale(2.5);
+  pscaled.print();
+
+  Point p_plus_q = p+q;
+  p_plus_q.print();
 
   Rectangle pq_rect(p,2,1);
   cout << "area: " << pq_rect.area() << '\n';
