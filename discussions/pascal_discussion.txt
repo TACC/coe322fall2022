@@ -1,0 +1,111 @@
+================ basic idea
+
+class pascal {
+    private:
+        vector<vector<int>> triangle;
+    public:
+        pascal(int rows_in) {
+            rows = rows_in;
+            triangle = vector<vector<int>>(rows,vector<int>(rows));
+            for(int i = 0; i < rows; i++){
+                for(int j = 0; j < rows-i; j++)
+                    triangle.at(i).at(j) = 0;
+                int val = 1;
+                for(int j = 0; j < i+1; j++){
+                    triangle.at(i).at(j) = val;
+                    val = val * ((i+1) - (j+1))/(j+1);
+                }
+            }
+        }
+
+================
+
+other way of constructing:
+
+class pascal{
+private:
+  vector<vector<int>> fullTriang;  // holds all rows
+public:
+  pascal(int in_n){ // contstructing
+    // stuff
+    while ( currRow <= n ){
+      rowElems = getPascal(currRow);
+      fullTriang.push_back(rowElems);
+
+================
+
+Very efficient:
+
+class Tri_Matrix{
+private:
+  int get_idx(int row, int col){
+    int row_index = (row*row + row) / 2;
+    // use col value to find element within row
+    int element_index = row_index - row + col - 1;
+  };
+protected:
+  int max_rows;
+  vector<int> triangle;
+  int get(int row, int col){
+    // returns value at element index
+    int index = get_idx(row, col);
+    return triangle.at(index);
+  };
+
+
+================ hm, version 1
+
+    void print() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < i + 1; j++) {
+                int coefficient = get(i, j);
+                cout << coefficient << " ";
+            }
+            cout << "\n";
+        }
+        
+    }
+
+This does not store the coefficients
+
+    int get(int i, int j) {
+        if ((i == j) || (j == 0)) {
+            return 1;
+        }
+        else {
+            return get(i - 1, j - 1) + get(i - 1, j);
+        }
+    }
+    
+Arguments against this?
+
+================ hm, version 2
+
+  void print() {
+    generate_matrix();
+    int space = size;
+    for(int i=0; i<size; i++) {
+      cout << std:: setw(space);
+
+Conflation of functions
+
+================ hm, version 3
+
+      for( int currCol = 0; currCol <= currRow; currCol++) {
+        int newVal = 0;
+        newVal = factorial(currRow)/(factorial(currCol)*factorial(currRow-currCol)); // Equation from slides 
+        p_triangle.push_back(newVal); // Appends calculated value to the end of the vector
+      };
+
+
+Very limited usable
+
+================ hm, version 4
+
+    for (int rc = 1; rc <= row; rc++) {
+        value = value * (row - rc)/(rc);
+    }
+
+Not as bad as factorial but still dangerous
+
+
