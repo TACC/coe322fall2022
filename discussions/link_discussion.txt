@@ -1,0 +1,66 @@
+  void insert(int value) {
+	if(datavalue == value){
+            // if value already exists in the list
+            datacount += 1;
+	}
+	else if (datavalue > value) {
+            // cannot happen because it should be satisfied from the insert method in the linked list class
+            throw("this cannot happen");
+	}
+	else if (next == nullptr){
+            // if reached the end of the list, add value to the end
+            next = make_shared<Node>(value);
+	}
+	else if (next->value() > value && datavalue < value) {
+            // if value is in between two existing values in the list
+            auto newnode = make_shared<Node>(value, next);
+            next = newnode;            	
+	}
+	else {
+            // if the other conditions are not met, then call function again with the next node
+            next->insert(value);
+	}
+  }
+
+================ Nice use of access functions
+
+  void insert(int value){//insert value into list in order
+    if(datavalue == value){//value matches this node -> increase count
+      datacount++;
+    } else if(!has_next()){//add to end of list
+      next = make_shared<Node>(value, next);
+    } else if(value > next->value()){//if value > next node, recursion at next node
+      next->insert(value);
+    } else {//value is in correct order, add new node here
+      next = make_shared<Node>(value, next);
+    } 
+  };
+
+
+================ No C pointers please
+
+class List {
+public:
+    Node* head = NULL;
+
+(also: data members should be private)
+
+================ No C pointers
+
+void sortedInsert(Node** head_ref, Node* new_node)
+{
+  Node* current; 
+  if (*head_ref == NULL || (*head_ref)->data >= new_node->data) {
+    new_node-> next = *head_ref;
+    *head_ref = new_node;
+  }
+  else {
+    current = *head_ref;
+    while (current->next != NULL && current-> next-> data < new_node->data) {
+      current = current-> next;
+    }
+    new_node-> next = current-> next;
+    current-> next = new_node;
+  }
+}
+
