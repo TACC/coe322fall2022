@@ -43,24 +43,5 @@ class List {
 public:
     Node* head = NULL;
 
+C pointers are an invitation to memory leaks
 (also: data members should be private)
-
-================ No C pointers
-
-void sortedInsert(Node** head_ref, Node* new_node)
-{
-  Node* current; 
-  if (*head_ref == NULL || (*head_ref)->data >= new_node->data) {
-    new_node-> next = *head_ref;
-    *head_ref = new_node;
-  }
-  else {
-    current = *head_ref;
-    while (current->next != NULL && current-> next-> data < new_node->data) {
-      current = current-> next;
-    }
-    new_node-> next = current-> next;
-    current-> next = new_node;
-  }
-}
-
