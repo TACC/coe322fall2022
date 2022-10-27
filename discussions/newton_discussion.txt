@@ -1,0 +1,63 @@
+================ Good
+
+double find_zero(function<double(double)> f, function<double(double)> fprime){
+ // newton method
+}
+
+double find_zero(function<double(double)> f){
+	double h = 1e-6;
+	return find_zero(f, [h, f](double x) -> double{ return (f(x + h) - f(x)) / h; });
+}
+
+Good use of polymorphism
+
+================ Suboptimal
+
+double find_zero ( function< double(double) > f, function< double(double) > fprime ) {
+ // newton method
+}
+
+double find_zero ( function< double(double) > f) {
+ double x = 1.0;
+ double h = 1.e-6;
+ auto fprime = [h,f] (double x) -> double { return (f(x+h)-f(x))/h; };
+ // another newton method
+}
+
+================ Main program
+
+    cin >> n;
+    auto squared_minus_n = [n] (double x) -> double {return x*x - n;};
+    double root = newton_root(squared_minus_n);
+
+================ Separation of concerns
+
+double newton_root(function<double(double)>f){
+  float h = 1.e-6 ;
+  int n;
+  cout << "enter a number " << '\n';
+  cin >> n;
+  auto g = [n] (double x) -> double {return x*x -n;};
+  auto fprime = [n,h] (double x) -> double {return (((x+h)*(x+h) - n) - (x*x - n))/ h;};
+  cout << "the root of this number is : " ;
+  return newton_root(g,fprime);
+};
+
+Good, except that
+1. the "cin" should be in the main program
+2. the input parameter "f" is never used
+
+================ more of that
+
+double find_zero (function< double(double) > f,function< double(double) > fprime) {
+  double x{ 1. };
+  while (true) {
+    auto fx = f(x);
+    cout << "f( " << x << " ) = " << fx << "\n";
+    if (std::abs(fx) < 1.e-10) break;
+    x = x - fx / fprime(x);
+  }
+  return 0;
+}
+
+Output should also not be in a computational routine
