@@ -2,12 +2,11 @@
 !***
 !*** This file belongs with the course
 !*** Introduction to Scientific Programming in C++/Fortran2003
-!*** copyright 2017-2021 Victor Eijkhout eijkhout@tacc.utexas.edu
+!*** copyright 2017-2022 Victor Eijkhout eijkhout@tacc.utexas.edu
 !***
-!*** listf.F90 : linked list basics in Fortran
+!*** listfappendalloc.F90 : append only
 !***
 !****************************************************************
-
 
 Program LinkedList
 
@@ -22,55 +21,71 @@ Program LinkedList
      type(node),pointer :: head
   end type list
   
+  integer,dimension(3) :: inputs = [1,5,3]
+  integer :: input,input_value
+
   type(list) :: the_list
   type(node),pointer :: node_ptr
 
   nullify(the_list%head)
 
-  allocate(node_ptr); node_ptr%value = 1
-  call insert(the_list,node_ptr)
-  allocate(node_ptr); node_ptr%value = 5
-  call insert(the_list,node_ptr)
-  allocate(node_ptr); node_ptr%value = 3
-  call insert(the_list,node_ptr)
+  do input=1,3
+     input_value = inputs(input)
+     call attach(the_list,input_value)
+  end do
 
   call print(the_list)
 
 contains
   
-  subroutine insert( the_list,new_node )
+  subroutine attach( the_list,new_value )
     implicit none
     ! parameters
     type(list),intent(inout) :: the_list
-    type(node),intent(inout),pointer :: new_node
-    ! local
-    type(node),pointer :: current,previous
+    integer,intent(in) :: new_value
 
+    ! local
+
+    ! if the list has no head node, attached the new node
     if (.not.associated(the_list%head)) then
-       nullify(new_node%next)
-       the_list%head => new_node
+       allocate( the_list%head )
+       the_list%head%value = new_value
     else
 
+       if ( .not. associated(the_list%head) ) then
+          allocate( the_list%head )
+          the_list%head%value = new_value
+       else
+          call node_attach( the_list%head,new_value )
+       end if
+
+#if 0
+#endif
     end if
     
-  end subroutine insert
+  end subroutine attach
   
+  recursive subroutine node_attach( the_node,new_value )
+    implicit none
+    ! parameters
+    type(node),intent(inout) :: the_node
+    integer,intent(in) :: new_value
+    
+    if ( .not. associated(the_node%next) ) then
+       allocate( the_node%next )
+       the_node%next%value = new_value
+    else
+       call node_attach( the_node%next,new_value )
+    end if
+
+  end subroutine node_attach
+
   integer function length( the_list )
     implicit none
     type(list),intent(in) :: the_list
     ! local
     type(node),pointer :: current
 
-    if (.not.associated(the_list%head)) then
-       length = 0
-    else
-       current => the_list%head       
-       do
-          length = length+1
-          if (.not.associated(current%next)) exit
-          current => current%next
-       end do
-    end if
   end function length
 
   subroutine print(the_list)
